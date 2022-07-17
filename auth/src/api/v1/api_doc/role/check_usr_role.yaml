@@ -1,0 +1,59 @@
+summary: "Проверить роль у пользователя"
+tags:
+  - "Role"
+produces:
+  - "application/json"
+requestBody:
+  description: "Проверяем наличие роли у пользователя, отсутствие ролей равносильно `anonymous`"
+  required: "true"
+  content:
+    application/json:
+      schema:
+        type: "object"
+        properties:
+          id_user:
+            type: "string"
+            format: "uuid"
+            example: "6f71b32b-e74d-4803-aab6-dc915dec01a0"
+            required: "true"
+          id_role:
+            type: "string"
+            format: "uuid"
+            example: "6f71b32b-e74d-4803-aab6-dc915dec01a0"
+            required: "true"
+responses:
+  200:
+    description: "`Role` запись успешно удалена"
+    content:
+      application/json:
+        schema:
+          type: "object"
+          properties:
+            data:
+              type: "boolean"
+              example: "null"
+            status:
+              type: "string"
+            message:
+              type: "array"
+              items:
+                type: "string"
+              example: "[{status: Ok}]"
+  400:
+    description: "Ошибка в данных, неверно указан `id`, либо у вас нет прав на проведение данной операции"
+    content:
+      application/json:
+        schema:
+          type: "object"
+          properties:
+            data:
+              type: "boolean"
+              example: "null"
+            status:
+              type: "integer"
+              example: "400"
+            message:
+              type: "array"
+              items:
+                type: "string"
+              example: "Bad data"

@@ -1,0 +1,57 @@
+summary: "Назначить  новую роль пользователю"
+tags:
+  - "Role"
+requestBody:
+  description: "Назначение новой роли пользователю"
+  required: "true"
+  content:
+    application/json:
+      schema:
+        type: "object"
+        properties:
+          id_user:
+            type: "string"
+            example: "97cd9d35-890c-4a2a-8321-08d9b1a83181"
+            format: "uuid"
+            required: "true"
+          id_role:
+            type: "string"
+            example: "6f71b32b-e74d-4803-aab6-dc915dec01a0"
+            format: "uuid"
+            required: "true"
+responses:
+  200:
+    description: "Successfully"
+    content:
+      application/json:
+        schema:
+          type: "object"
+          properties:
+            data:
+              type: "boolean"
+              example: "null"
+            status:
+              type: "string"
+            message:
+              type: "array"
+              items:
+                type: "string"
+              example: "Ok"
+  400:
+    description: "Bad request"
+    content:
+      application/json:
+        schema:
+          type: "object"
+          properties:
+            data:
+              type: "boolean"
+              example: "null"
+            status:
+              type: "integer"
+              example: "400"
+            message:
+              type: "array"
+              items:
+                type: "string"
+              example: "Incorrect data"

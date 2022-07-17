@@ -1,0 +1,114 @@
+version: "3"
+
+services:
+
+  elasticsearch:
+    container_name: elastic_async_api_v1
+    image: elasticsearch:7.17.1
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - elastic_api_vol:/usr/share/elasticsearch/data
+    ports:
+      - ${ELASTIC_PORT}:${ELASTIC_PORT}
+    env_file:
+      - .env
+
+  redis:
+    container_name: redis_async_api_v1
+    image: redis:7.0.0
+    volumes:
+      - redis_api_vol:/data
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
+    env_file:
+      - .env
+
+  postgres:
+    container_name: postgres
+    image: postgres:13-alpine3.15
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data/
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    env_file:
+      - .env
+
+  fastapi_solution:
+    container_name: fastapi_solution
+    build: .
+    working_dir: /fastapi_solution
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - elasticsearch
+      - postgres
+
+  etl:
+    container_name: etl
+    image: vivera83/etl:0.4
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+      - elasticsearch
+      - redis
+
+  nginx:
+    container_name: nginx_async_api_v1
+    build: ./nginx
+    env_file:
+      - .env
+    volumes:
+      - ./nginx:/nginx
+      - static_volume:/app/static
+    ports:
+      - ${NGINX_PORT}:80
+    depends_on:
+      - redis
+      - fastapi_solution
+      - django
+
+
+  django:
+    container_name: django
+    image: vivera83/admin_panel
+    command: [ "sh", "docker-entrypoint.sh" ]
+    volumes:
+      - static_volume:/app/static
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+
+  auth:
+    container_name: auth
+    build:
+      context: .
+      dockerfile: dockerfile_auth
+    command: [ "sh", "boot.sh" ]
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - postgres
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "6831:6831/udp"
+      - "16686:16686"
+      - "5775:5775/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+      - "14268:14268"
+      - "9411:9411"
+    environment:
+      - COLLECTOR_ZIPKIN_HTTP_PORT=9411
+
+volumes:
+  redis_api_vol:
+  elastic_api_vol:
+  postgres_volume:
+  static_volume:

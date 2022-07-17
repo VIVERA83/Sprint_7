@@ -1,0 +1,50 @@
+summary: "Получить данные о `User` по id"
+tags:
+  - "User"
+description: "Подробное описание о `User`"
+produces:
+  - "application/json"
+parameters:
+  - in: "query"
+    name: "id"
+    schema:
+      type: "string"
+      format: "uuid"
+      example: "6f71b32b-e74d-4803-aab6-dc915dec01a0"
+    required:
+      - "id"
+    description: "id `User` которого нужно вернуть"
+
+responses:
+  200:
+    description: "Успешно"
+    content:
+      application/json:
+        schema:
+          type: "object"
+          properties:
+            data:
+              $ref: "#/components/schemas/Url"
+            message:
+              type: "string"
+              example: "Ok"
+              default: "Ok"
+            status:
+              type: "integer"
+              example: "200"
+  404:
+    description: "Не найдено"
+    content:
+      application/json:
+        schema:
+          type: "object"
+          properties:
+            data:
+              type: "string"
+              example:
+            message:
+              type: "string"
+              example: "Not Found"
+            status:
+              type: "integer"
+              example: "404"

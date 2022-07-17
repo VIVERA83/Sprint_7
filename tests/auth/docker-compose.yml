@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+
+  postgres:
+    container_name: postgres
+    image: postgres:13-alpine3.15
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data/
+    env_file:
+      - .env
+
+  redis:
+    container_name: redis_test
+    image: redis:7.0.0
+    volumes:
+      - redis_api_vol:/data
+    env_file:
+      - .env
+
+  auth:
+    container_name: auth
+    build: /../..
+    working_dir: /auth
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - postgres
+
+  test:
+    container_name: test
+    build: .
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - postgres
+      - auth
+    expose:
+      - ${REDIS_PORT}
+      - ${POSTGRES_PORT}
+
+
+volumes:
+  redis_api_vol:
+  postgres_volume:
+

@@ -1,0 +1,30 @@
+summary: "Список пользователей"
+tags:
+  - "User"
+description: "Возвращает список пользователей"
+responses:
+  200:
+    description: "Успешно"
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/Response"
+
+  400:
+    description: "Запрашиваемых данных нет либо есть ограничения доступа"
+    content:
+      application/json:
+        schema:
+          type: "object"
+          properties:
+            data:
+              type: "boolean"
+              example: "null"
+            status:
+              type: "integer"
+              example: "400"
+            message:
+              type: "array"
+              items:
+                type: "string"
+              example: "Not Found"

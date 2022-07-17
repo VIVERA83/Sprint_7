@@ -1,0 +1,48 @@
+summary: "Зарегистрировать нового пользователя"
+tags:
+  - "User"
+requestBody:
+  description: "Регистрация нового пользователя"
+  required: "true"
+  content:
+    application/json:
+      schema:
+        type: "object"
+        $ref: "#/components/schemas/User"
+
+responses:
+  200:
+    description: "Successfully"
+    content:
+      application/json:
+        schema:
+          type: "object"
+          properties:
+            data:
+              type: "boolean"
+              example: "null"
+            status:
+              type: "string"
+            message:
+              type: "array"
+              items:
+                type: "string"
+              example: "Ok"
+  400:
+    description: "Bad request"
+    content:
+      application/json:
+        schema:
+          type: "object"
+          properties:
+            data:
+              type: "boolean"
+              example: "null"
+            status:
+              type: "integer"
+              example: "400"
+            message:
+              type: "array"
+              items:
+                type: "string"
+              example: "Incorrect data"

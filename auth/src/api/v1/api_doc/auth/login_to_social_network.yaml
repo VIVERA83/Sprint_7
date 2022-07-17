@@ -1,0 +1,50 @@
+summary: "Авторизация пользователя c помощью социальной сети"
+tags:
+  - "Auth"
+parameters:
+  - in: "query"
+    name: "social_network"
+    required: "true"
+    schema:
+      type: "string"
+      enum:
+        - "Yandex"
+        - "VK"
+    description: "Название социальной сети"
+
+responses:
+  200:
+    description: "Successfully"
+    content:
+      application/json:
+        schema:
+          type: "object"
+          properties:
+            data:
+              type: "boolean"
+              example: "null"
+            status:
+              type: "string"
+            message:
+              type: "array"
+              items:
+                type: "string"
+              example: "Ok"
+  400:
+    description: "Bad request"
+    content:
+      application/json:
+        schema:
+          type: "object"
+          properties:
+            data:
+              type: "boolean"
+              example: "null"
+            status:
+              type: "integer"
+              example: "401"
+            message:
+              type: "array"
+              items:
+                type: "string"
+              example: "Not Found"

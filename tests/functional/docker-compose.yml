@@ -1,0 +1,57 @@
+version: "3"
+
+services:
+
+  elasticsearch:
+    container_name: elastic_async_api_v1
+    image: elasticsearch:7.17.1
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - elastic_api_vol:/usr/share/elasticsearch/data
+    ports:
+      - ${ELASTIC_PORT}:${ELASTIC_PORT}
+    env_file:
+      - .env
+
+  redis:
+    container_name: redis_async_api_v1
+    image: redis:7.0.0
+    volumes:
+      - redis_api_vol:/data
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
+    env_file:
+      - .env
+
+  fastapi_solution:
+    container_name: fastapi_solution
+    build: /../..
+    working_dir: /fastapi_solution
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - elasticsearch
+    ports:
+      - 8000:8000
+
+  test:
+    container_name: test
+    build: .
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - elasticsearch
+      - fastapi_solution
+      - nginx
+    expose:
+      - ${REDIS_PORT}
+      - ${ELASTIC_PORT}
+      - ${NGINX_PORT}
+
+volumes:
+  redis_api_vol:
+  elastic_api_vol:
+

@@ -1,0 +1,180 @@
+{
+  "swagger": "3.0.2",
+  "info": {
+    "title": "Сервис авторизации",
+    "description": "___`API for my data`___",
+    "contact": {
+      "responsibleOrganization": "Рога и копыта",
+      "responsibleDeveloper": "Me",
+      "email": "vivera83@yandex.ru",
+      "url": "https://github.com/VIVERA83/Auth_sprint_1"
+    },
+    "version": "0.0.1"
+  },
+  "host": "127.0.0.1:8000/",
+  "basePath": "/api/v1/",
+  "schemes": [
+    "http"
+  ],
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "test@google.com",
+            "description": "email, пользователя, используется как логин, должен быть уникальным"
+          },
+          "username": {
+            "type": "string",
+            "example": "Василий Алибаевич Сменой",
+            "description": "Имя..."
+          },
+          "password": {
+            "type": "string",
+            "format": "hidden",
+            "writeOnly": "true",
+            "example": "my-password",
+            "description": "password, пользователя"
+          },
+          "role": {
+            "type": "array",
+            "readOnly": "true",
+            "items": {
+              "$ref": "#/components/schemas/Role"
+            }
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": "true",
+            "example": "6f71b32b-e74d-4803-aab6-dc915dec01a0",
+            "description": "id объекта, по которому можно получить информацию по объекту"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": "true",
+            "example": "2022-06-22T07:49:15.358812",
+            "description": "Дата и время создания объекта"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": "true",
+            "example": "2022-06-22T07:49:15.358812",
+            "description": "Дата и время последних изменений в объекте"
+          }
+        },
+        "required": [
+          "login",
+          "password"
+        ]
+      },
+      "Role": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Base level",
+            "description": "Понятное, короткое название роли"
+          },
+          "description": {
+            "type": "string",
+            "example": "Базовый уровень доступа к приложение, данная роль присваивается все пользователям ",
+            "description": "Описание роли, чем подробней тем будет понятней"
+          },
+          "access": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Access"
+            }
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": "true",
+            "example": "6f71b32b-e74d-4803-aab6-dc915dec01a0",
+            "description": "id объекта, по которому можно получить информацию по объекту"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": "true",
+            "example": "2022-06-22T07:49:15.358812",
+            "description": "Дата и время создания объекта"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": "true",
+            "example": "2022-06-22T07:49:15.358812",
+            "description": "Дата и время последних изменений в объекте"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "Id": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "97548111-d90d-433a-9d63-aa218510e355",
+            "description": "`id` уникальный индификатор объекта"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "Login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "test@mail.com",
+            "description": "Ваш `email` который вы вводили при регистрации"
+          },
+          "password": {
+            "type": "string",
+            "format": "hidden",
+            "example": "my_password",
+            "description": "Ваш `password` �, "
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "Path": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "example": "/auth/api/v1/login",
+            "description": "Путь к ресурсу, "
+          }
+        },
+        "required": [
+          "path"
+        ]
+      },
+      "SocialNetwork": {
+        "type": "string",
+        "enum": [
+          "Yandex",
+          "Mail.ru",
+          "VK"
+        ]
+      }
+    }
+  }
+}
+
+
