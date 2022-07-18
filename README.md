@@ -3,11 +3,26 @@
 ______
 api к кино сервису. В данном модуле реализованы:
 
- * Admin panel. рализована на основе Django
-
+ * Admin panel:
+      * Django
+      * PostgresSQL
+ * Модуль авторизации:
+      * Flask
+      * Swagger
+      * Redis
+      * Postgres
+  * Api кино поиска:
+      * FastApi
+      * Redis
+      * ElasticSearch
+  * ETL
+      * PostgresSQL
+      * ElasticSearch      
 
 вызов:
-- http://127.0.0.1:8000/apidocs/
+- http://127.0.0.1:8000/apidocs/ - api авторизации
+- http://127.0.0.1:8000/admin/ - admin panel
+- http://127.0.0.1:8000/api/openapi - api авторизации
 
 запуск через docker-compose
 
