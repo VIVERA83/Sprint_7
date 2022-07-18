@@ -1,11 +1,9 @@
 
 # Проектная работа 7 спринта
 ______
- __Состав команды__ 
-- [Чириков Андрей](https://github.com/drakonhg)
-- [Сергиевский Алексей](https://github.com/VIVERA83?tab=repositories)
- 
-репозиторий [Auth_sprint_2](https://github.com/drakonhg/Auth_sprint_2)
+api к кино сервису. В данном модуле реализованы:
+
+ * Admin panel. рализована на основе Django
 
 
 вызов:
@@ -25,7 +23,7 @@ docker-compose up --build
     * Зарегистрировать приложение в соответсвующий сети (Yandex, VK)
     * Обозначить ссылку для REDIRECT_HOST как пример:
     * ```"http://1.140.157.87:8000/auth/api/v1/login_to_social_network/?social_network=VK"```
-  обрати внимание путь ```login_to_social_network/?social_network=VK``` обязателен, благодаря этому редирект возвращается в апи которое занимается регистрацию и авторизацией пользователя по социальной сети
+  обрати внимание путь ```login_to_social_network/?social_network=VK``` обязателен, благодаря этому редирект возвращается в апи которое занимается регистрацие и авторизацией пользователя по социальной сети
    
     * Взять CLIENT_ID и CLIENT_SECRET указать их в .env файле
     
